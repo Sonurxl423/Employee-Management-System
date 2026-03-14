@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+</head>
+
+<body>
+
+
+
+<div class="container">
+    <h2>Employee Management System</h2>
+    <hr>
+    <p>
+        Welcome to Employee Management System home page!
+    </p>
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <!-- Left side button -->
+        <a th:href="@{/employees/list}"
+           class="btn btn-primary btn-sm">
+            Get Employee
+        </a>
+
+
+        <div class="d-flex justify-content-end">
+
+            <form th:action="@{/logout}" method="POST">
+                <button type="submit" class="btn btn-danger btn-sm">
+                    Logout
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+
+    <hr>
+
+    <!-- display user name and role -->
+
+    <p>
+        User: <span sec:authentication="principal.username"></span>
+        <br><br>
+        Role(s): <span sec:authentication="principal.authorities"></span>
+    </p>
+
+    <div sec:authorize="hasRole('MANAGER')">
+
+        <!-- Add a link to point to /leaders ... this is for the managers -->
+        <p>
+            <a th:href="@{/leaders}">Leadership Meeting</a>
+            (Only for Manager peeps)
+        </p>
+
+    </div>
+
+    <div sec:authorize="hasRole('ADMIN')">
+
+        <!-- Add a link to point to /systems ... this is for the admins -->
+
+        <p>
+            <a th:href="@{/systems}">IT Systems Meeting</a>
+            (Only for Admin peeps)
+        </p>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+</body>
+</html>
