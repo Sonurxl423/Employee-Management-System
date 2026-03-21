@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.emptrack.dao.EmployeeRepository;
 import com.emptrack.entity.Employee;
+import com.emptrack.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImp implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private final PasswordUtil passwordUtil;
 
     @Autowired
-    public EmployeeServiceImp(EmployeeRepository theEmployeeRepository) {
+    public EmployeeServiceImp(EmployeeRepository theEmployeeRepository,PasswordUtil passwordUtil) {
         employeeRepository = theEmployeeRepository;
+        this.passwordUtil = passwordUtil;
     }
 
     @Override
@@ -41,8 +44,11 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public void save(Employee theEmployee) {
-        employeeRepository.save(theEmployee);
+    public void save(Employee employee) {
+        if (!employee.getPassword().startsWith("$2a$")) {
+            employee.setPassword(passwordUtil.encode(employee.getPassword()));
+        }
+        employeeRepository.save(employee);
     }
 
     @Override
