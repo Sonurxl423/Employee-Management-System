@@ -27,7 +27,7 @@
                     <!-- Only HR & ADMIN -->
                     <li class="nav-item"
                         sec:authorize="hasAnyRole('HR','ADMIN')">
-                        <a class="nav-link" th:href="@{/employees/add}">
+                        <a class="nav-link" th:href="@{/employees/showFormForAdd}">
                             Add Employee
                         </a>
                     </li>

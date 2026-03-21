@@ -28,7 +28,7 @@
         <h3 class="fw-bold">Employee Directory</h3>
 
         <!-- Add Button -->
-        <a th:href="@{/employees/add}"
+        <a th:href="@{/employees/showFormForAdd}"
            class="btn btn-primary"
            sec:authorize="hasAnyRole('HR','ADMIN')">
             + Add Employee
@@ -59,8 +59,8 @@
 
             <tbody>
 
-            <tr th:each="emp : ${employees}">
-
+<!--            <tr th:each="emp : ${employees}">-->
+                <tr th:each="emp : ${employeePage.content}">
                 <td class="fw-semibold" th:text="${emp.firstName}"></td>
                 <td th:text="${emp.lastName}"></td>
                 <td th:text="${emp.email}"></td>
@@ -79,7 +79,7 @@
                     <form th:action="@{/employees/showFormForUpdate}"
                           method="POST"
                           class="d-inline"
-                          sec:authorize="hasRole('HR')">
+                          sec:authorize="hasAnyRole('HR','ADMIN')">
 
                         <input type="hidden" name="employeeId" th:value="${emp.id}" />
 
@@ -101,12 +101,18 @@
                             🗑 Delete
                         </button>
                     </form>
+                    <!-- EMPLOYEE: View Only -->
+                    <form th:action="@{/employees/list}"
+                          method="GET"
+                          class="d-inline"
+                          sec:authorize="hasRole('EMPLOYEE')">
 
-                    <!-- EMPLOYEE: No Access -->
-                    <span class="badge bg-secondary">
-                           👁 View Only
-                    </span>
+                        <input type="hidden" name="employeeId" th:value="${emp.id}" />
 
+                        <button class="btn btn-secondary btn-sm">
+                            👁 View Only
+                        </button>
+                    </form>
 
                 </td>
 
@@ -115,7 +121,39 @@
             </tbody>
         </table>
 
+        <!-- Pagination START -->
+        <div class="d-flex justify-content-end mt-3">
+
+            <!-- Previous -->
+            <a th:if="${currentPage > 0}"
+               th:href="@{/employees/list(page=${currentPage - 1}, size=${employeePage.size})}"
+               class="btn btn-outline-primary btn-sm me-2">
+                ←
+            </a>
+
+            <!-- Page Numbers -->
+            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+
+        <a th:href="@{/employees/list(page=${i}, size=${employeePage.size})}"
+           th:text="${i + 1}"
+           class="btn btn-sm me-1"
+           th:classappend="${i == currentPage} ? 'btn-primary' : 'btn-outline-primary'">
+        </a>
+
+    </span>
+
+            <!-- Next -->
+            <a th:if="${currentPage < totalPages - 1}"
+               th:href="@{/employees/list(page=${currentPage + 1}, size=${employeePage.size})}"
+               class="btn btn-outline-primary btn-sm ms-2">
+                →
+            </a>
+
+        </div>
+        <!-- Pagination END -->
+
     </div>
+
 
     <!-- Back Button -->
     <div class="mt-3">

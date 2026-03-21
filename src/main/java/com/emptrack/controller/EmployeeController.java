@@ -3,6 +3,9 @@ package com.emptrack.controller;
 import java.util.List;
 import com.emptrack.entity.Employee;
 import com.emptrack.service.EmployeeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +20,22 @@ public class EmployeeController {
         employeeService = theEmployeeService;
     }
 
-    // add mapping for "/list"
-
     @GetMapping("/list")
-    public String listEmployees(Model theModel) {
+    public String listEmployees(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            Model model) {
 
-        // get the employees from db
-        List<Employee> theEmployees = employeeService.findAll();
+        Page<Employee> employeePage = employeeService.findPaginated(PageRequest.of(page, size));
 
-        // add to the spring model
-        theModel.addAttribute("employees", theEmployees);
+        model.addAttribute("employeePage", employeePage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", employeePage.getTotalPages());
 
         return "employees/list-employees";
     }
 
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel) {
 
@@ -43,6 +48,7 @@ public class EmployeeController {
     }
 
 
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
     @PostMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("employeeId") int id, Model themodel) {
 
@@ -52,6 +58,7 @@ public class EmployeeController {
         return "employees/employee-form";
     }
 
+    @PreAuthorize("hasAnyRole('HR','ADMIN')")
     @PostMapping("/save")
     public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
 
@@ -62,6 +69,7 @@ public class EmployeeController {
         return "redirect:/employees/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")
     public String delete(@RequestParam("employeeId") int theId) {
 

@@ -8,6 +8,8 @@ import com.emptrack.entity.Employee;
 import com.emptrack.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService {
@@ -19,6 +21,10 @@ public class EmployeeServiceImp implements EmployeeService {
     public EmployeeServiceImp(EmployeeRepository theEmployeeRepository,PasswordUtil passwordUtil) {
         employeeRepository = theEmployeeRepository;
         this.passwordUtil = passwordUtil;
+    }
+
+    public Page<Employee> findPaginated(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
     }
 
     @Override
