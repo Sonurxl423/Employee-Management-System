@@ -15,11 +15,27 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(configurer ->
-                        configurer
-                                .requestMatchers("/").hasRole("EMPLOYEE")
-                                .requestMatchers("/leaders/**").hasRole("MANAGER")
-                                .requestMatchers("/systems/**").hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                configurer
+
+                        // Everyone (EMPLOYEE, HR, ADMIN) can view list
+                        .requestMatchers("/employees/list")
+                        .hasAnyRole("EMPLOYEE", "HR", "ADMIN")
+
+                        // Only HR & ADMIN can add/update
+                        .requestMatchers("/employees/showFormForAdd", "/employees/save", "/employees/showFormForUpdate")
+                        .hasAnyRole("HR", "ADMIN")
+
+                        // Only ADMIN can delete
+                        .requestMatchers("/employees/delete")
+                        .hasRole("ADMIN")
+
+                        // Allow static resources (important)
+                        .requestMatchers("/css/**", "/js/**")
+                        .permitAll()
+
+                        // All other requests require login
+                        .anyRequest()
+                        .authenticated()
                 )
                 .formLogin(form ->
                         form

@@ -1,0 +1,49 @@
+/* Background */
+body {
+    background-color: #f4f6f9;
+}
+
+/* Card Styling */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Table Header */
+.table thead {
+    background: #343a40;
+    color: white;
+}
+
+/* Hover Effect */
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Department Badge */
+.badge-dept {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* Department Colors */
+.dept-EMPLOYEE {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.dept-HR {
+    background-color: #ffc107;
+    color: black;
+}
+
+.dept-ADMIN {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Action Buttons */
+.action-btns button {
+    margin-right: 5px;
+}
