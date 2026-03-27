@@ -19,4 +19,6 @@ public interface EmployeeService {
 
     public Page<Employee> findPaginated(Pageable pageable);
 
+    long countEmployees();
+
 }

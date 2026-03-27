@@ -34,9 +34,11 @@ public class SecurityConfig {
                         .permitAll()
 
                         // All other requests require login
+
                         .anyRequest()
                         .authenticated()
                 )
+
                 .formLogin(form ->
                         form
                                 .loginPage("/showMyLoginPage")

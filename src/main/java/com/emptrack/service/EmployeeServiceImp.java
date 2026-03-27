@@ -51,15 +51,33 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public void save(Employee employee) {
-        if (!employee.getPassword().startsWith("$2a$")) {
+
+        // 🔹 Validate unique email
+        Optional<Employee> existing = employeeRepository.findByEmail(employee.getEmail());
+
+        if (existing.isPresent() &&
+                (employee.getId() == null ||
+                        !existing.get().getId().equals(employee.getId()))) {
+
+            throw new RuntimeException("Email already exists!");
+        }
+
+        // 🔹 Handle password
+        if (employee.getPassword() != null && !employee.getPassword().startsWith("$2a$")) {
             employee.setPassword(passwordUtil.encode(employee.getPassword()));
         }
+
         employeeRepository.save(employee);
     }
 
     @Override
     public void deleteById(int theId) {
         employeeRepository.deleteById(theId);
+    }
+
+    @Override
+    public long countEmployees() {
+        return employeeRepository.count();
     }
 
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">📊 Dashboard</h2>
+
+    <div class="row">
+
+        <!-- Total Employees -->
+        <div class="col-md-4">
+            <div class="card p-3 text-center">
+                <h5>Total Employees</h5>
+                <h2 th:text="${totalEmployees}"></h2>
+            </div>
+        </div>
+
+        <!-- HR Only -->
+        <div class="col-md-4" sec:authorize="hasRole('HR')">
+            <div class="card p-3 text-center">
+                <h5>HR Panel</h5>
+                <p>Manage employees</p>
+            </div>
+        </div>
+
+        <!-- Admin Only -->
+        <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
+            <div class="card p-3 text-center">
+                <h5>Admin Controls</h5>
+                <p>Full system access</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
