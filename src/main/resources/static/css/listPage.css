@@ -47,3 +47,27 @@ body {
 .action-btns button {
     margin-right: 5px;
 }
+
+
+/* Dropdown styling */
+.dropdown-menu {
+    padding: 10px 0;
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+    transition: 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: #ffe5e5;
+}
+
+.dropdown-menu .badge {
+    font-size: 11px;
+    padding: 4px 8px;
+}

@@ -15,5 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     public List<Employee> findAllByOrderByLastNameAsc();
     Optional<Employee> findByEmail(String email);
     Optional<Employee> findByUsername(String username);
+    long countByDepartment(String department);
+
 
 }

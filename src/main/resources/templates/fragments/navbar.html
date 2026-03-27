@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -17,13 +18,14 @@
 
                 <ul class="navbar-nav me-auto">
 
-                    <!-- Visible to all -->
+                    <!-- Dashboard -->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/dashboard}">
                             Dashboard
                         </a>
                     </li>
 
+                    <!-- Employees -->
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/employees/list}">
                             Employees
@@ -48,22 +50,54 @@
 
                 </ul>
 
-                <!-- Right Side -->
+                <!-- 🔥 RIGHT SIDE DROPDOWN -->
                 <div class="d-flex align-items-center text-white">
 
-                    <span class="me-3">
-                        👤 <span sec:authentication="name"></span>
-                    </span>
+                    <div class="dropdown">
 
-                    <span class="me-3">
-                        (<span sec:authentication="principal.authorities"></span>)
-                    </span>
+                        <a class="nav-link dropdown-toggle text-white d-flex align-items-center"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
 
-                    <form th:action="@{/logout}" method="post">
-                        <button class="btn btn-outline-light btn-sm">
-                            Logout
-                        </button>
-                    </form>
+                            👤 <span class="ms-2" sec:authentication="name"></span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow"
+                            style="min-width: 220px; border-radius: 10px;">
+
+                            <!-- Profile -->
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center"
+                                   th:href="@{/profile}">
+                                    👤 <span class="ms-2">Profile</span>
+                                </a>
+                            </li>
+
+                            <!-- Role Info -->
+                            <li class="px-3 py-2 text-muted small">
+                                Role:
+                                <span class="badge bg-primary ms-1"
+                                      th:text="${#strings.replace(#authentication.principal.authorities.toString(), 'ROLE_', '')}">
+                                </span>
+                            </li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <!-- Logout -->
+                            <li>
+                                <form th:action="@{/logout}" method="post">
+                                    <button type="submit"
+                                            class="dropdown-item d-flex align-items-center text-danger">
+                                        🚪 <span class="ms-2">Logout</span>
+                                    </button>
+                                </form>
+                            </li>
+
+                        </ul>
+
+                    </div>
 
                 </div>
 

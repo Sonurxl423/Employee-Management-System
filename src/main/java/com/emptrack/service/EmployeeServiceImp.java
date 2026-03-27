@@ -80,6 +80,21 @@ public class EmployeeServiceImp implements EmployeeService {
         return employeeRepository.count();
     }
 
+
+    @Override
+    public long countByDepartment(String department) {
+        return employeeRepository.countByDepartment(department);
+    }
+
+    @Override
+    public long countDistinctDepartments() {
+        return employeeRepository.findAll()
+                .stream()
+                .map(Employee::getDepartment)
+                .distinct()
+                .count();
+    }
+
 }
 
 

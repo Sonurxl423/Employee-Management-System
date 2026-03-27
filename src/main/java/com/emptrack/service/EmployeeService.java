@@ -21,4 +21,8 @@ public interface EmployeeService {
 
     long countEmployees();
 
+    long countByDepartment(String department);
+
+    long countDistinctDepartments();
+
 }

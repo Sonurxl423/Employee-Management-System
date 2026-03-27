@@ -1,73 +1,61 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <title>Home</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<div class="container">
-    <h2>Employee Management System</h2>
-    <hr>
-    <p>
-        Welcome to Employee Management System home page!
-    </p>
+<div class="container mt-5 text-center">
 
-    <div class="d-flex justify-content-between mb-3">
+    <!-- Hero Section -->
+    <h1 class="fw-bold">Welcome to EmpTrack 🚀</h1>
+    <p class="text-muted">Manage your employees efficiently and securely</p>
 
-        <!-- Left side button -->
-        <a th:href="@{/employees/list}"
-           class="btn btn-primary btn-sm">
-            Get Employee
-        </a>
+    <div class="mt-4">
+        <a th:href="@{/dashboard}" class="btn btn-primary me-2">Go to Dashboard</a>
+        <a th:href="@{/employees/list}" class="btn btn-outline-secondary">View Employees</a>
+    </div>
 
-        <div class="d-flex justify-content-end">
+    <!-- Stats -->
+    <div class="row mt-5">
 
-            <form th:action="@{/logout}" method="POST">
-                <button type="submit" class="btn btn-danger btn-sm">
-                    Logout
-                </button>
-            </form>
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>Departments</h5>
+                <h2 th:text="${totalDepartments}">0</h2>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>Total Employees</h5>
+                <h2 th:text="${totalEmployees}">0</h2>
+            </div>
+        </div>
 
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>Total ADMIN</h5>
+                <h2 th:text="${totalAdmin}">0</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 shadow">
+                <h5>Total HR</h5>
+                <h2 th:text="${totalHR}">0</h2>
+            </div>
         </div>
 
     </div>
 
-    <hr>
-
-    <!-- display user name and role -->
-
-    <p>
-        User: <span sec:authentication="principal.username"></span>
-        <br><br>
-        Role(s): <span sec:authentication="principal.authorities"></span>
-    </p>
-
-    <div sec:authorize="hasRole('HR')">
-
-        <p>
-            <a th:href="@{/leaders}">HR Meeting</a>
-            (Only for HR peeps)
-        </p>
-
-    </div>
-
-    <div sec:authorize="hasRole('ADMIN')">
-
-        <!-- Add a link to point to /systems ... this is for the admins -->
-        <p>
-            <a th:href="@{/systems}">IT Systems Meeting</a>
-            (Only for Admin peeps)
-        </p>
-
-    </div>
-
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
