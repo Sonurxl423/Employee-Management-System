@@ -19,7 +19,7 @@ public class SecurityConfig {
 
                         // Everyone (EMPLOYEE, HR, ADMIN) can view list
                         .requestMatchers("/employees/list")
-                        .hasAnyRole("EMPLOYEE", "HR", "ADMIN")
+                        .hasAnyRole("USER", "HR", "ADMIN")
 
                         // Only HR & ADMIN can add/update
                         .requestMatchers("/employees/showFormForAdd", "/employees/save", "/employees/showFormForUpdate")

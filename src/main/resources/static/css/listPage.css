@@ -28,19 +28,54 @@ body {
 }
 
 /* Department Colors */
-.dept-EMPLOYEE {
+.role-USER {
     background-color: #0d6efd;
     color: white;
 }
 
-.dept-HR {
+.role-HR {
     background-color: #ffc107;
     color: black;
 }
 
-.dept-ADMIN {
+.role-ADMIN {
     background-color: #dc3545;
     color: white;
+}
+/* IT */
+.dept-IT {
+    background-color: #6f42c1; /* purple */
+    color: white;
+}
+
+/* Finance */
+.dept-Finance {
+    background-color: #20c997; /* teal */
+    color: white;
+}
+
+/* Sales */
+.dept-Sales {
+    background-color: #fd7e14; /* orange */
+    color: white;
+}
+
+/* Marketing */
+.dept-Marketing {
+    background-color: #e83e8c; /* pink */
+    color: white;
+}
+
+/* HR Department (different from HR role) */
+.dept-HR {
+    background-color: #6c757d; /* gray */
+    color: white;
+}
+
+/* Default fallback */
+.dept-DEFAULT {
+    background-color: #adb5bd;
+    color: black;
 }
 
 /* Action Buttons */

@@ -30,6 +30,16 @@ public class Employee {
     private String department;
     private double salary;
 
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     // 🔹 Default Constructor
     public Employee() {
     }
@@ -60,10 +70,6 @@ public class Employee {
             this.username = email.substring(0, email.indexOf("@")).toLowerCase();
         }
 
-        // Department uppercase
-        if (this.department != null) {
-            this.department = this.department.toUpperCase();
-        }
     }
 
     // 🔹 Getters & Setters
@@ -142,8 +148,10 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", department='" + department + '\'' +
                 ", salary=" + salary +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

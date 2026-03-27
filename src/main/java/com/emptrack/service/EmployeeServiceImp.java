@@ -33,7 +33,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public Employee findById(int theId) {
+    public Employee findById(Long theId) {
         Optional<Employee> result = employeeRepository.findById(theId);
 
         Employee theEmployee = null;
@@ -52,7 +52,7 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public void save(Employee employee) {
 
-        // 🔹 Validate unique email
+        //  Validate unique email
         Optional<Employee> existing = employeeRepository.findByEmail(employee.getEmail());
 
         if (existing.isPresent() &&
@@ -62,8 +62,23 @@ public class EmployeeServiceImp implements EmployeeService {
             throw new RuntimeException("Email already exists!");
         }
 
-        // 🔹 Handle password
-        if (employee.getPassword() != null && !employee.getPassword().startsWith("$2a$")) {
+        //  HANDLE PASSWORD PROPERLY
+        if (employee.getId() != null) {
+
+            Employee existingEmp = employeeRepository.findById(employee.getId())
+                    .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+            // If password is empty → keep old password
+            if (employee.getPassword() == null || employee.getPassword().isBlank()) {
+                employee.setPassword(existingEmp.getPassword());
+            }
+            // If new plain password → encode
+            else if (!employee.getPassword().startsWith("$2a$")) {
+                employee.setPassword(passwordUtil.encode(employee.getPassword()));
+            }
+
+        } else {
+            //  New employee
             employee.setPassword(passwordUtil.encode(employee.getPassword()));
         }
 
@@ -71,7 +86,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public void deleteById(int theId) {
+    public void deleteById(Long theId) {
         employeeRepository.deleteById(theId);
     }
 
@@ -82,8 +97,8 @@ public class EmployeeServiceImp implements EmployeeService {
 
 
     @Override
-    public long countByDepartment(String department) {
-        return employeeRepository.countByDepartment(department);
+    public long countByRole(String Role) {
+        return employeeRepository.countByRole(Role);
     }
 
     @Override

@@ -18,9 +18,10 @@ public class HomeController {
     public String showHome(Model model) {
 
         long totalEmployees = service.countEmployees();
-        long totalHR = service.countByDepartment("HR");
-        long totalAdmin = service.countByDepartment("ADMIN");
         long totalDepartments = service.countDistinctDepartments();
+
+        long totalHR = service.countByRole("HR");
+        long totalAdmin = service.countByRole("ADMIN");
 
         model.addAttribute("totalEmployees", totalEmployees);
         model.addAttribute("totalHR", totalHR);

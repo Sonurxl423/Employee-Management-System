@@ -11,18 +11,17 @@ public interface EmployeeService {
 
     List<Employee> findAll();
 
-    Employee findById(int theId);
+    Employee findById(Long theId);
 
     void save(Employee theEmployee);
 
-    void deleteById(int theId);
+    void deleteById(Long theId);
 
     public Page<Employee> findPaginated(Pageable pageable);
 
     long countEmployees();
 
-    long countByDepartment(String department);
-
     long countDistinctDepartments();
 
+    long countByRole(String admin);
 }

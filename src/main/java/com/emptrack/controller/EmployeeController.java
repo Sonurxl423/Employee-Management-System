@@ -1,6 +1,5 @@
 package com.emptrack.controller;
 
-import java.util.List;
 import com.emptrack.entity.Employee;
 import com.emptrack.service.EmployeeService;
 import org.springframework.data.domain.Page;
@@ -50,7 +49,7 @@ public class EmployeeController {
 
     @PreAuthorize("hasAnyRole('HR','ADMIN')")
     @PostMapping("/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam("employeeId") int id, Model themodel) {
+    public String showFormForUpdate(@RequestParam("employeeId") Long id, Model themodel) {
 
         Employee theEmployee = employeeService.findById(id);
         themodel.addAttribute("employee", theEmployee);
@@ -71,7 +70,7 @@ public class EmployeeController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")
-    public String delete(@RequestParam("employeeId") int theId) {
+    public String delete(@RequestParam("employeeId") Long theId) {
 
         // delete the employee
         employeeService.deleteById(theId);
