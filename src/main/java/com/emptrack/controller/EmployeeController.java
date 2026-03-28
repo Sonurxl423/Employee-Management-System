@@ -23,10 +23,17 @@ public class EmployeeController {
     public String listEmployees(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
+            @RequestParam(value = "keyword", required = false) String keyword,
             Model model) {
 
-        Page<Employee> employeePage = employeeService.findPaginated(PageRequest.of(page, size));
+        Page<Employee> employeePage;
 
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            employeePage = employeeService.searchEmployeesPaginated(keyword, PageRequest.of(page, size));
+        } else {
+            employeePage = employeeService.findPaginated(PageRequest.of(page, size));
+        }
+        model.addAttribute("keyword", keyword);
         model.addAttribute("employeePage", employeePage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", employeePage.getTotalPages());
@@ -35,7 +42,7 @@ public class EmployeeController {
     }
 
     @PreAuthorize("hasAnyRole('HR','ADMIN')")
-    @GetMapping("/showFormForAdd")
+    @GetMapping("/Add")
     public String showFormForAdd(Model theModel) {
 
         // create model attribute to bind form data
@@ -48,7 +55,7 @@ public class EmployeeController {
 
 
     @PreAuthorize("hasAnyRole('HR','ADMIN')")
-    @PostMapping("/showFormForUpdate")
+    @PostMapping("/Update")
     public String showFormForUpdate(@RequestParam("employeeId") Long id, Model themodel) {
 
         Employee theEmployee = employeeService.findById(id);

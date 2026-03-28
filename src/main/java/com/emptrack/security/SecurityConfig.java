@@ -22,7 +22,7 @@ public class SecurityConfig {
                         .hasAnyRole("USER", "HR", "ADMIN")
 
                         // Only HR & ADMIN can add/update
-                        .requestMatchers("/employees/showFormForAdd", "/employees/save", "/employees/showFormForUpdate")
+                        .requestMatchers("/employees/Add", "/employees/save", "/employees/Update")
                         .hasAnyRole("HR", "ADMIN")
 
                         // Only ADMIN can delete

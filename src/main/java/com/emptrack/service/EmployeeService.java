@@ -23,5 +23,9 @@ public interface EmployeeService {
 
     long countDistinctDepartments();
 
-    long countByRole(String admin);
+    long countByRole(String role);
+
+    long countByDepartment(String department);
+
+    public Page<Employee> searchEmployeesPaginated(String keyword, Pageable pageable);
 }

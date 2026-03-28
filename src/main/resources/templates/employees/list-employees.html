@@ -28,18 +28,33 @@
         <h3 class="fw-bold">Employee Directory</h3>
 
         <!-- Add Button -->
-        <a th:href="@{/employees/showFormForAdd}"
+        <a th:href="@{/employees/Add}"
            class="btn btn-primary"
            sec:authorize="hasAnyRole('HR','ADMIN')">
             + Add Employee
         </a>
     </div>
 
-    <!-- Search -->
-    <form method="get" th:action="@{/employees/list}" class="mb-3">
-        <input type="text" name="keyword"
-               class="form-control"
-               placeholder="🔍 Search employees...">
+    <form th:action="@{/employees/list}" method="get" class="mb-3">
+
+        <div class="input-group">
+
+            <input type="text"
+                   name="keyword"
+                   th:value="${keyword}"
+                   class="form-control"
+                   placeholder="🔍 Search employees...">
+
+            <button class="btn btn-primary" type="submit">
+                Search
+            </button>
+
+            <a th:href="@{/employees/list}" class="btn btn-secondary">
+                Reset
+            </a>
+
+        </div>
+
     </form>
 
     <!-- Card -->
@@ -84,7 +99,7 @@
                 <td class="text-center">
 
                     <!-- HR: Update -->
-                    <form th:action="@{/employees/showFormForUpdate}"
+                    <form th:action="@{/employees/Update}"
                           method="POST"
                           class="d-inline"
                           sec:authorize="hasAnyRole('HR','ADMIN')">
@@ -134,7 +149,7 @@
 
             <!-- Previous -->
             <a th:if="${currentPage > 0}"
-               th:href="@{/employees/list(page=${currentPage - 1}, size=${employeePage.size})}"
+               th:href="@{/employees/list(page=${currentPage - 1}, size=${employeePage.size}, keyword=${keyword})}"
                class="btn btn-outline-primary btn-sm me-2">
                 ←
             </a>
@@ -142,7 +157,7 @@
             <!-- Page Numbers -->
             <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
 
-        <a th:href="@{/employees/list(page=${i}, size=${employeePage.size})}"
+        <a th:href="@{/employees/list(page=${i}, size=${employeePage.size}, keyword=${keyword})}"
            th:text="${i + 1}"
            class="btn btn-sm me-1"
            th:classappend="${i == currentPage} ? 'btn-primary' : 'btn-outline-primary'">
@@ -152,15 +167,13 @@
 
             <!-- Next -->
             <a th:if="${currentPage < totalPages - 1}"
-               th:href="@{/employees/list(page=${currentPage + 1}, size=${employeePage.size})}"
+               th:href="@{/employees/list(page=${currentPage + 1}, size=${employeePage.size}, keyword=${keyword})}"
                class="btn btn-outline-primary btn-sm ms-2">
                 →
             </a>
 
         </div>
         <!-- Pagination END -->
-
-    </div>
 
 
     <!-- Back Button -->

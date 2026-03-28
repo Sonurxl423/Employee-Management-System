@@ -22,12 +22,22 @@ public class HomeController {
 
         long totalHR = service.countByRole("HR");
         long totalAdmin = service.countByRole("ADMIN");
+        long totalUser = service.countByRole("USER");
+
+        long totalSales = service.countByDepartment("Sales");
+        long totalFinance = service.countByDepartment("Finance");
+        long totalMarketing = service.countByDepartment("Marketing");
 
         model.addAttribute("totalEmployees", totalEmployees);
         model.addAttribute("totalHR", totalHR);
         model.addAttribute("totalAdmin", totalAdmin);
+        model.addAttribute("totalUser", totalUser);
         model.addAttribute("totalDepartments", totalDepartments);
 
-        return "homePage";
+        model.addAttribute("totalSales", totalSales);
+        model.addAttribute("totalFinance", totalFinance);
+        model.addAttribute("totalMarketing", totalMarketing);
+
+        return "home";
     }
 }

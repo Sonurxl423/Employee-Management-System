@@ -102,12 +102,21 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
+    public long countByDepartment(String department) {
+        return employeeRepository.countByDepartment(department);
+    }
+
+    @Override
     public long countDistinctDepartments() {
         return employeeRepository.findAll()
                 .stream()
                 .map(Employee::getDepartment)
                 .distinct()
                 .count();
+    }
+
+    public Page<Employee> searchEmployeesPaginated(String keyword, Pageable pageable) {
+        return employeeRepository.searchEmployees(keyword, pageable);
     }
 
 }
