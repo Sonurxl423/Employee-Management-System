@@ -32,6 +32,10 @@
             <!-- Hidden ID -->
             <input type="hidden" th:field="*{id}" />
 
+            <div class="alert alert-danger" th:if="${errorMessage}">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
             <!-- First Name -->
             <div class="mb-3">
                 <label class="form-label">First Name</label>

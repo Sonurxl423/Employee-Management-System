@@ -66,14 +66,34 @@ public class EmployeeController {
 
     @PreAuthorize("hasAnyRole('HR','ADMIN')")
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
+    public String saveEmployee(@ModelAttribute("employee") Employee employee,
+                               Model model) {
 
-        // save the employee
-        employeeService.save(theEmployee);
+        try {
+            employeeService.save(employee);
+        } catch (RuntimeException e) {
 
-        // use a redirect to prevent duplicate submissions
+            // 🔥 Send error message to UI
+            model.addAttribute("errorMessage", e.getMessage());
+
+            // Keep entered data
+            model.addAttribute("employee", employee);
+
+            return "employees/employee-form"; // stay on same page
+        }
+
         return "redirect:/employees/list";
     }
+
+//    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
+//
+//        // save the employee
+//        employeeService.save(theEmployee);
+//
+//        // use a redirect to prevent duplicate submissions
+//        return "redirect:/employees/list";
+//    }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete")

@@ -60,7 +60,7 @@
                            data-bs-toggle="dropdown"
                            aria-expanded="false">
 
-                            👤 <span class="ms-2" sec:authentication="name"></span>
+                            👤 <span th:text="${loggedInUser.firstName + ' ' + loggedInUser.lastName}"></span>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end shadow"

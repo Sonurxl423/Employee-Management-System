@@ -27,6 +27,7 @@ public class HomeController {
         long totalSales = service.countByDepartment("Sales");
         long totalFinance = service.countByDepartment("Finance");
         long totalMarketing = service.countByDepartment("Marketing");
+        long totalIT = service.countByDepartment("IT");
 
         model.addAttribute("totalEmployees", totalEmployees);
         model.addAttribute("totalHR", totalHR);
@@ -37,6 +38,7 @@ public class HomeController {
         model.addAttribute("totalSales", totalSales);
         model.addAttribute("totalFinance", totalFinance);
         model.addAttribute("totalMarketing", totalMarketing);
+        model.addAttribute("totalIT", totalIT);
 
         return "home";
     }
